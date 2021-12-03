@@ -53,8 +53,24 @@ def logout_page():
 	flash("Successfully logged out!", category='info')
 	return redirect(url_for("home_page"))
 
-@app.route('/upload')
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_page():
 	form = UploadForm()
-	flash("You can upload your baobei's info now!", category='info')
+	# flash("You can upload your baobei's info now!", category='info')
+	if form.validate_on_submit():
+		item_to_create = Item(name = form.itemname.data,
+							price = form.price.data,
+							description = form.description.data,
+							barcode = form.phone.data
+							)
+		db.session.add(item_to_create)
+		db.session.commit()
+		return redirect(url_for('upload_page'))
+	if form.errors != {}: # if there are not errors from the validations
+		for err_msg in form.errors.values():
+			flash(f'There was an error with posting an item: {err_msg}', category='danger')
 	return render_template('upload.html', form=form)
+
+@app.route('/info')
+def info_page():
+	return render_template('moreinfo.html', form=form)
