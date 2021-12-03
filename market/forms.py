@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, DateField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
 from market.models import User
 
@@ -27,4 +28,12 @@ class LoginForm(FlaskForm):
 	submit = SubmitField(label='Sign In')
 
 class UploadForm(FlaskForm):
-	
+	image = FileField(label='Image File',  validators=[FileAllowed(['jpg', 'png'])])
+	itemname = StringField(label='Item Name:', validators=[DataRequired()])
+	email_address = StringField(label='Password:', validators=[Email(), DataRequired()])
+	phone = StringField(label='Phone Number')  #optional?
+	date = DateField(label='Date of Purchase', validators=[DataRequired()])
+	pick_address = StringField(label='Pick-up Address', validators=[DataRequired()])
+	price =StringField(label='Price', validators=[DataRequired()])
+	description = StringField(label='Description') #optional
+	submit = SubmitField(label='Post baobei')
