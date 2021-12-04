@@ -12,8 +12,8 @@ def home_page():
 
 @app.route('/market')
 def market_page():
-    items = Item.query.all()
-    return render_template('market.html', items=items)
+    postings = Posting.query.all()
+    return render_template('market.html', postings=postings)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
@@ -76,15 +76,14 @@ def upload_page():
 	return render_template('upload.html', form=form)
 
 
-@app.route('/info/<string:itemid>', methods=['GET', 'POST'])
-def info_page(itemid):
+@app.route('/info/<string:id>', methods=['GET', 'POST'])
+def info_page(id):
 	form = UploadForm()
-	item = Item.query.filter_by(id=int(itemid)).one()
+	posting = Posting.query.filter_by(id=int(id)).one()
 	# flash(f'Information of item {itemid}')
-	return render_template('moreinfo.html', form=form, item=item)
+	return render_template('moreinfo.html', form=form, posting=posting)
 
 @app.route('/profile/<string:userid>', methods=['GET', 'POST'])
 def profile_page(userid):
 	user = User.query.filter_by(id=int(userid)).one()
 	return render_template('profile.html', user=user)
-
