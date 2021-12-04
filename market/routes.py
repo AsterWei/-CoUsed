@@ -86,4 +86,15 @@ def info_page(id):
 @app.route('/profile/<string:userid>', methods=['GET', 'POST'])
 def profile_page(userid):
 	user = User.query.filter_by(id=int(userid)).one()
+	email = user.email_address
+	# print(email)
+	postings = Posting.query.filter_by(email_address=email)
+	return render_template('profile.html', user=user, postings=postings)
+
+@app.route('/delete/<string:postingid>', methods=['GET', 'POST'])
+def delete_page(postingid):
+	email_address = Posting.query.filter_by(id=postingid).first().email_address
+	user = User.query.filter_by(email_address=email_address).first()
+	Posting.query.filter_by(id=postingid).delete()
+	flash('Posting has been deleted!', category='success')
 	return render_template('profile.html', user=user)

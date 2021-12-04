@@ -5,6 +5,44 @@
 {% endblock %}
 
 {% block content %}
-Profile of user {{ user.username }} ...
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-dark" style="color:white">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h2 class="display-4 font-weight-normal">Profile of user {{ user.username }}</h2>
+        <p class="lead font-weight-normal">Your postings are shown below</p>
+    </div>
+</div>
+{% for posting in postings %}
+    <table class="table table-hover table-dark">
+      <thead>
+          <tr>
+              <!-- Your Columns HERE -->
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <!-- <th scope="col">Barcode</th> -->
+              <th scope="col">Price</th>
+              <th scope="col">Options</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Your rows inside the table HERE: -->
+          {% for posting in postings %}
+            <tr>
+                <td>{{ posting.id }}</td>
+                <td>{{ posting.itemname }}</td>
+                <td>{{ posting.price }}$</td>
+                <td>
+                  <a href="{{ url_for('info_page', id=posting.id)}}"> 
+                    <button class="btn btn-outline btn-info">More Info</button>  
+                  </a>
+                  <a href="{{ url_for('delete_page', postingid=posting.id, userid=user.id)}}"> 
+                  	<button class="btn btn-outline btn-success">Delete This Posting</button>
+                  </a>
+                </td>
+            </tr>
+          {% endfor %}
+
+      </tbody>
+    </table>
+{% endfor %}
 
 {% endblock %}
