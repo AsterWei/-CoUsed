@@ -28,7 +28,6 @@ def register_page():
 	if form.errors != {}: # if there are not errors from the validations
 		for err_msg in form.errors.values():
 			flash(f'There was an error with creating a user: {err_msg}', category='danger')
-			
 	return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -71,6 +70,8 @@ def upload_page():
 			flash(f'There was an error with posting an item: {err_msg}', category='danger')
 	return render_template('upload.html', form=form)
 
-@app.route('/info')
-def info_page():
-	return render_template('moreinfo.html', form=form)
+@app.route('/info/<string:itemid>', methods=['GET', 'POST'])
+def info_page(itemid):
+	form = UploadForm()
+	# flash(f'Information of item {itemid}')
+	return render_template('moreinfo.html', form=form, itemid=itemid)
