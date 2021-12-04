@@ -73,5 +73,11 @@ def upload_page():
 @app.route('/info/<string:itemid>', methods=['GET', 'POST'])
 def info_page(itemid):
 	form = UploadForm()
+	item = Item.query.filter_by(id=int(itemid)).one()
 	# flash(f'Information of item {itemid}')
-	return render_template('moreinfo.html', form=form, itemid=itemid)
+	return render_template('moreinfo.html', form=form, item=item)
+
+@app.route('/profile/<string:userid>', methods=['GET', 'POST'])
+def profile_page(userid):
+	user = User.query.filter_by(id=int(userid)).one()
+	return render_template('profile.html', user=user)
