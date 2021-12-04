@@ -1,6 +1,6 @@
 from market import app
 from flask import render_template, redirect, url_for, flash
-from market.models import Item, User
+from market.models import Item, User, Posting
 from market.forms import RegisterForm, LoginForm, UploadForm
 from market import db
 from flask_login import login_user, logout_user
@@ -57,18 +57,24 @@ def upload_page():
 	form = UploadForm()
 	# flash("You can upload your baobei's info now!", category='info')
 	if form.validate_on_submit():
-		item_to_create = Item(name = form.itemname.data,
+		posting_to_create = Posting(image = form.image.data,
+							itemname = form.itemname.data,
+							email_address = form.email_address.data,
+							phone = form.phone.data,
+							date = form.date.data,
+							pick_address = form.pick_address.data,
 							price = form.price.data,
 							description = form.description.data,
-							barcode = form.phone.data
 							)
-		db.session.add(item_to_create)
+		db.session.add(posting_to_create)
 		db.session.commit()
-		return redirect(url_for('upload_page'))
+		flash(f'Successfully uploaded!', category='success')
+		return redirect(url_for('profile_page'))
 	if form.errors != {}: # if there are not errors from the validations
 		for err_msg in form.errors.values():
 			flash(f'There was an error with posting an item: {err_msg}', category='danger')
 	return render_template('upload.html', form=form)
+
 
 @app.route('/info/<string:itemid>', methods=['GET', 'POST'])
 def info_page(itemid):
@@ -81,3 +87,4 @@ def info_page(itemid):
 def profile_page(userid):
 	user = User.query.filter_by(id=int(userid)).one()
 	return render_template('profile.html', user=user)
+
