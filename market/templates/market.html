@@ -17,14 +17,13 @@
       </thead>
       <tbody>
           <!-- Your rows inside the table HERE: -->
-          {% for item in items %}
+          {% for posting in postings %}
             <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <!-- <td>{{ item.barcode }}</td> -->
-                <td>{{ item.price }}$</td>
+                <td>{{ posting.id }}</td>
+                <td>{{ posting.itemname }}</td>
+                <td>{{ posting.price }}$</td>
                 <td>
-                  <a href="{{ url_for('info_page', itemid=item.id)}}"> 
+                  <a href="{{ url_for('info_page', id=posting.id)}}"> 
                     <button class="btn btn-outline btn-info">More Info</button>  
                   </a>
                   <button class="btn btn-outline btn-success">Purchase This Item</button>
