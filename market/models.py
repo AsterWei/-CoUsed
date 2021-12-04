@@ -34,3 +34,14 @@ class Item(db.Model):
     owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
     def __repr__(self):
         return f'Item {self.name}'
+
+class Posting(db.Model):
+	id = db.Column(db.Integer(), primary_key=True)
+	itemname = db.Column(db.String(length=30), nullable=False, unique=False)
+	email_address = db.Column(db.String(length=50), nullable=False, unique=True)
+	phone = db.Column(db.String(length=15), nullable=False, unique=False)
+	date = db.Column(db.String(length=10), nullable=True, unique=False)
+	pick_address = db.Column(db.String(length=30), nullable=False, unique=False)
+	price = db.Column(db.Integer(), nullable=False)
+	description = db.Column(db.String(length=300), nullable=False, unique=False)
+	image = db.Column(db.String(length=100), nullable=True, unique=True)
