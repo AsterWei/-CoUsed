@@ -4,6 +4,24 @@
 {% endblock %}
 
 {% block content %}
-Information of item {{ posting.itemname }} ...
+  <body>
+    <img class="mb-4" src="{{url_for('static', filename='ThomasWoo.png')}}" alt="Thomas Woo" align="middle" width="250" height="150" />
+    <h1>
+      {{ posting.itemname }}
+    </h1>
+    <p>
+      Price: {{posting.price}}<br>
+      Description: {{ posting.description }} <br>
+      Date purchased: {{posting.date}} <br>
+      Pick-up address: {{ posting.pick_address }}
+    </p>
+    <h2>
+      Contact the owner! 
+    </h2>
+    <p>
+      Owner's email address: {{ posting.email_address }}<br>
+      Owner's phone number: {{ posting.phone }}<br>
+    </p>
+  </body>
 
 {% endblock %}
