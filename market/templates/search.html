@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Search Page
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container">
+        <form  method="POST" class="form-signin" style="color:white">
+            {{ form.hidden_tag() }}
+            <img class="mb-4" src="{{url_for('static', filename='ThomasWoo.png')}}" alt="Thomas Woo" align="middle" width="250" height="150" />
+            <h1 class="h3 mb-3 font-weight-normal">
+                You can search postings here
+            </h1>
+            <br>
+            {{ form.name.label() }}
+            {{ form.name(class="form-control", placeholder="Item Name") }}
+            
+            <br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+        </form>
+    </div>
+</body>
+{% endblock %}
