@@ -45,3 +45,4 @@ class Posting(db.Model):
 	price = db.Column(db.Integer(), nullable=False)
 	description = db.Column(db.String(length=300), nullable=False, unique=False)
 	image = db.Column(db.String(length=100), nullable=True, unique=True)
+	
