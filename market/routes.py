@@ -1,11 +1,14 @@
 from market import app
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from market.models import Item, User, Posting
 from market.forms import RegisterForm, LoginForm, UploadForm
 from market import db
 from flask_login import login_user, logout_user
 
 @app.route("/")
+def index():
+    return render_template("index.html")
+
 @app.route("/home")
 def home_page():
     return render_template('home.html')
@@ -69,7 +72,8 @@ def upload_page():
 		db.session.add(posting_to_create)
 		db.session.commit()
 		flash(f'Successfully uploaded!', category='success')
-		return redirect(url_for('profile_page'))
+		user = User.query.filter_by(email_address=form.email_address.data).first()
+		return redirect(url_for('profile_page', userid=user.id))
 	if form.errors != {}: # if there are not errors from the validations
 		for err_msg in form.errors.values():
 			flash(f'There was an error with posting an item: {err_msg}', category='danger')
@@ -96,5 +100,34 @@ def delete_page(postingid):
 	email_address = Posting.query.filter_by(id=postingid).first().email_address
 	user = User.query.filter_by(email_address=email_address).first()
 	Posting.query.filter_by(id=postingid).delete()
+	db.session.commit()
+	postings = Posting.query.filter_by(email_address=email_address)
 	flash('Posting has been deleted!', category='success')
-	return render_template('profile.html', user=user)
+	return render_template('profile.html', user=user, postings=postings)
+
+@app.route("/livesearch",methods=["POST","GET"])
+def livesearch():
+	searchbox = request.form.get("text")
+	print(searchbox)
+	result = Posting.query.filter(Posting.itemname.like('searchbox%'))
+	return jsonify(result)
+
+# @app.route('/search', methods=['GET', 'POST'])
+# def index():
+#     search = MusicSearchForm(request.form)
+#     if request.method == 'POST':
+#         return search_results(search)
+#     return render_template('index.html', form=search)
+
+# @app.route('/results')
+# def search_results(search):
+#     results = []
+#     search_string = search.data['search']
+#     if search.data['search'] == '':
+#         results = Posting.query.all()
+#     if not results:
+#         flash('No results found!')
+#         return redirect('/')
+#     else:
+#         # display results
+#         return render_template('results.html', results=results)

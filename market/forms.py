@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, DateField
+from wtforms import StringField, PasswordField, SubmitField, DateField, Form, SelectField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
 from market.models import User
 
@@ -37,3 +37,10 @@ class UploadForm(FlaskForm):
 	price =StringField(label='Price', validators=[DataRequired()])
 	description = StringField(label='Description') #optional
 	submit = SubmitField(label='Post baobei')
+
+class MusicSearchForm(Form):
+    choices = [('Artist', 'Artist'),
+               ('Album', 'Album'),
+               ('Publisher', 'Publisher')]
+    select = SelectField('Search for music:', choices=choices)
+    search = StringField('')
