@@ -5,7 +5,7 @@ from market.forms import RegisterForm, LoginForm, UploadForm
 from market import db
 from flask_login import login_user, logout_user
 
-@app.route("/")
+@app.route("/index")
 def index():
     return render_template("index.html")
 
@@ -109,8 +109,14 @@ def delete_page(postingid):
 def livesearch():
 	searchbox = request.form.get("text")
 	print(searchbox)
-	result = Posting.query.filter(Posting.itemname.like('searchbox%'))
-	return jsonify(result)
+	all_dicts = []
+	result = Posting.query.filter(Posting.itemname.like('%' +searchbox + '%')).all()
+	for res in result:
+		tmpdict = res.__dict__
+		del tmpdict['_sa_instance_state']
+		all_dicts.append(tmpdict)
+	print(all_dicts)
+	return jsonify(all_dicts)
 
 # @app.route('/search', methods=['GET', 'POST'])
 # def index():
