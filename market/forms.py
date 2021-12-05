@@ -37,12 +37,9 @@ class UploadForm(FlaskForm):
 	price =StringField(label='Price', validators=[DataRequired()])
 	description = StringField(label='Description') #optional
 	submit = SubmitField(label='Post baobei')
-<<<<<<< HEAD
 
 
 class SearchForm(FlaskForm):
 	name = StringField(label='name')
 	submit = SubmitField(label='Submit Search')
 
-=======
->>>>>>> 37d3f82a174f44d1d02410c3d73137a3ef8c8152
