@@ -37,10 +37,3 @@ class UploadForm(FlaskForm):
 	price =StringField(label='Price', validators=[DataRequired()])
 	description = StringField(label='Description') #optional
 	submit = SubmitField(label='Post baobei')
-
-class MusicSearchForm(Form):
-    choices = [('Artist', 'Artist'),
-               ('Album', 'Album'),
-               ('Publisher', 'Publisher')]
-    select = SelectField('Search for music:', choices=choices)
-    search = StringField('')
