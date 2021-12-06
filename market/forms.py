@@ -30,7 +30,7 @@ class LoginForm(FlaskForm):
 class UploadForm(FlaskForm):
 	image = FileField(label='Image File',  validators=[FileAllowed(['jpg', 'png'])])
 	itemname = StringField(label='Item Name:', validators=[DataRequired()])
-	email_address = StringField(label='Password:', validators=[DataRequired()])
+	email_address = StringField(label='Email address:', validators=[DataRequired()])
 	phone = StringField(label='Phone Number')  #optional?
 	date = DateField(label='Date of Purchase', validators=[DataRequired()])
 	pick_address = StringField(label='Pick-up Address', validators=[DataRequired()])
