@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, DateField, Form, SelectField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from market.models import User
 
 class RegisterForm(FlaskForm):
@@ -17,7 +17,7 @@ class RegisterForm(FlaskForm):
 			raise ValidationError('Email Address already exists! Please try to login with your account')
 
 	username = StringField(label='User Name', validators=[Length(min=2, max=30), DataRequired()])
-	email_address = StringField(label='Email Address:', validators=[Email(),DataRequired()])
+	email_address = StringField(label='Email Address:', validators=[DataRequired()])
 	password1 = PasswordField(label='Password:', validators=[Length(min=6), DataRequired()])
 	password2 = PasswordField(label='Confirm Password:', validators=[EqualTo('password1'), DataRequired()])
 	submit = SubmitField(label='Create Account')
@@ -30,7 +30,7 @@ class LoginForm(FlaskForm):
 class UploadForm(FlaskForm):
 	image = FileField(label='Image File',  validators=[FileAllowed(['jpg', 'png'])])
 	itemname = StringField(label='Item Name:', validators=[DataRequired()])
-	email_address = StringField(label='Password:', validators=[Email(), DataRequired()])
+	email_address = StringField(label='Password:', validators=[DataRequired()])
 	phone = StringField(label='Phone Number')  #optional?
 	date = DateField(label='Date of Purchase', validators=[DataRequired()])
 	pick_address = StringField(label='Pick-up Address', validators=[DataRequired()])
