@@ -9,6 +9,7 @@ from flask_login import login_user, logout_user
 def index():
     return render_template("index.html")
 
+@app.route("/")
 @app.route("/home")
 def home_page():
     return render_template('home.html')
@@ -84,9 +85,12 @@ def upload_page():
                             )
         db.session.add(posting_to_create)
         db.session.commit()
-        flash(f'Successfully uploaded!', category='success')
         user = User.query.filter_by(email_address=form.email_address.data).first()
-        return redirect(url_for('profile_page', userid=user.id))
+        if user:
+            flash(f'Successfully uploaded!', category='success')
+            return redirect(url_for('profile_page', userid=user.id))
+        else:
+            flash(f'Please use your registered email address', category='danger')
     if form.errors != {}: # if there are not errors from the validations
         for err_msg in form.errors.values():
             flash(f'There was an error with posting an item: {err_msg}', category='danger')

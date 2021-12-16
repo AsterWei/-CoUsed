@@ -33,7 +33,7 @@ app = Flask(__name__)
 # except:
 #     print('except')
 #     pass
-app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql + mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket =/cloudsql/{CONNECTION_NAME}"
+app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket=/cloudsql/{CONNECTION_NAME}"
 # app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqldb://root:{PASSWORD}@127.0.0.1:3306/{DBNAME}"
 app.config['SECRET_KEY'] = 'd04185fb691b3504c372e134'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
